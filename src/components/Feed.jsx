@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import {SideBar,Videos} from "./index";
+import { SideBar, Videos } from "./index";
 import { fetchFromAPI } from "../utils/fetchFromAPI";
 
 const Feed = () => {
+  const [selectedCategory, setSelectedCategory] = useState("New");
+  const [videos,setVideos]=useState([]);
 
-  const [selectedCategory,setSelectedCategory]=useState('New');
-
-  useEffect(()=>{
-   fetchFromAPI(`search?part=snippet&q=${selectedCategory}`)
-  },[selectedCategory])
-
+  useEffect(() => {
+    fetchFromAPI(`search?part=snippet&q=${selectedCategory}`)
+   .then((data)=>
+    setVideos(data.items))
+  }, [selectedCategory]);
+ 
   return (
     <Stack
       sx={{
@@ -30,8 +32,10 @@ const Feed = () => {
           px: { sx: 0, md: 2 },
         }}
       >
-        <SideBar selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory} />
+        <SideBar
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
         <Typography
           className="copyright"
           variant="body2"
@@ -40,8 +44,7 @@ const Feed = () => {
           Cpoyright @2024 Youtube
         </Typography>
       </Box>
-      <Box p={2} sx={{ overflow: "auto" ,height:'90vh' , flex:2}}
-      >
+      <Box p={2} sx={{ overflow: "auto", height: "90vh", flex: 2 }}>
         <Typography
           variant="h4"
           fontWeight="bold"
@@ -50,7 +53,7 @@ const Feed = () => {
         >
           {selectedCategory} <span style={{ color: "#f31503" }}>Videos</span>
         </Typography>
-        <Videos video={[]}/>
+        <Videos video={videos} />
       </Box>
     </Stack>
   );
