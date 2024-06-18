@@ -7,13 +7,12 @@ import { demoProfilePicture } from '../utils/constants'
 const ChannelCard = ({channelDetail}) =>(
    <Box
    sx={{boxShadow:'none',
-       borderRadius:'20px',
        display:'flex',
        justifyContent:'center',
        alignItems:'center',
-       width:{xs:'350px',md:'300px'},
-       height:'326px',
-       margin:'auto'
+       width:{xs:'350px',md:'320px'},
+       height:'300px',
+       margin:'10px',
    }}
    >
     <Link to={`/channel/${channelDetail?.id?.channelId}`} >
@@ -30,7 +29,7 @@ const ChannelCard = ({channelDetail}) =>(
     </Typography>
     {channelDetail?.statistics?.subscriberCount&&(
       <Typography>
-        {parseInt(channelDetail?.statistics?.subscriberCount).toLocaleString()} Subscriber
+        {parseInt(channelDetail?.statistics?.subscriberCount).toLocaleString()} Subscribers
       </Typography>
     )}
     </CardContent>
